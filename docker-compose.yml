@@ -1,0 +1,56 @@
+# yaml 配置实例
+version: '3'
+services:
+  node-exporter:
+    image: prom/node-exporter
+    restart: always
+    expose:
+      - "9100"
+    networks:
+      - "serviceMonitor"
+    container_name: node-exporter
+
+  consul:
+    image: consul
+    container_name: consul
+    restart: always
+    ports:
+     - "8500:8500"
+    volumes:
+     - /etc/localtime:/etc/localtime
+     - /home/docker/consul/conf/:/consul/conf/
+     - /home/docker/consul/data/:/consul/data/
+    networks: 
+      serviceMonitor:
+        ipv4_address: 172.30.1.50
+    logging:
+      driver: json-file
+      options:
+        max-size: "200k" # 单个文件大小为200k
+        max-file: "5" # 最多10个文件
+    depends_on:
+      - prometheus
+    command: consul agent -dev -node=testNode -client=0.0.0.0 -ui
+  
+  prometheus:
+    image: prom/prometheus
+    container_name: my-prom
+    restart: always
+    ports:
+      - "9090:9090"
+    volumes:
+      - /etc/localtime:/etc/localtime
+      - /home/zwx/serviceMonitor/prometheus.yml:/etc/prometheus/prometheus.yml
+    networks:
+      - "serviceMonitor"
+    logging:
+      driver: json-file
+      options:
+        max-size: "200k" # 单个文件大小为200k
+        max-file: "5" # 最多10个文件
+    depends_on:
+      - node-exporter
+
+networks:
+ serviceMonitor:
+  external: true
