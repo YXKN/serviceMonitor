@@ -11,13 +11,13 @@ scrape_configs:
  
   - job_name: linux
     static_configs:
-      - targets: ['172.30.1.51:9100']
+      - targets: ['node-exporter:9100']
         labels:
-          instance: '172.30.1.51'
+          instance: 'node-exporter'
 
   - job_name: consul-prometheus
     consul_sd_configs:
-      - server:   '172.30.1.50:8500'
+      - server:   'consul:8500'
         services: []
     relabel_configs:
       - source_labels: ['__meta_consul_service']

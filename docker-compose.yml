@@ -28,7 +28,7 @@ services:
       driver: json-file
       options:
         max-size: "200k" # 单个文件大小为200k
-        max-file: "5" # 最多10个文件
+        max-file: "5" # 最多5个文件
     depends_on:
       - prometheus
   
@@ -48,9 +48,23 @@ services:
       driver: json-file
       options:
         max-size: "200k" # 单个文件大小为200k
-        max-file: "5" # 最多10个文件
+        max-file: "5" # 最多5个文件
     depends_on:
       - node-exporter
+
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    restart: always
+    ports:
+      - "3000:3000"
+    networks:
+      - "serviceMonitor"
+    logging:
+      driver: json-file
+      options:
+        max-size: "200k" # 单个文件大小为200k
+        max-file: "5" # 最多5个文件
 
 networks:
  serviceMonitor:
