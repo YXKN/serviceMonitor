@@ -6,8 +6,9 @@ services:
     restart: always
     expose:
       - "9100"
-    networks:
-      - "serviceMonitor"
+    networks: 
+      serviceMonitor:
+        ipv4_address: 172.30.1.51
     container_name: node-exporter
 
   consul:
@@ -18,8 +19,8 @@ services:
      - "8500:8500"
     volumes:
      - /etc/localtime:/etc/localtime
-     - /home/docker/consul/conf/:/consul/conf/
-     - /home/docker/consul/data/:/consul/data/
+     - /home/zwx/serviceMonitor/consul/config:/consul/config
+     - /home/zwx/serviceMonitor/consul/data/:/consul/data/
     networks: 
       serviceMonitor:
         ipv4_address: 172.30.1.50
@@ -30,19 +31,19 @@ services:
         max-file: "5" # 最多10个文件
     depends_on:
       - prometheus
-    command: consul agent -dev -node=testNode -client=0.0.0.0 -ui
   
   prometheus:
     image: prom/prometheus
-    container_name: my-prom
+    container_name: myprom
     restart: always
     ports:
       - "9090:9090"
     volumes:
       - /etc/localtime:/etc/localtime
       - /home/zwx/serviceMonitor/prometheus.yml:/etc/prometheus/prometheus.yml
-    networks:
-      - "serviceMonitor"
+    networks: 
+      serviceMonitor:
+        ipv4_address: 172.30.1.52
     logging:
       driver: json-file
       options:

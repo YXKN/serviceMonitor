@@ -2,13 +2,13 @@
    "service": {
      "id": "prometheus",
      "name": "prometheus",
-     "address": "192.168.10.11",
+     "address": "172.30.1.52",
      "port": 9090,
      "tags": [],
      "checks": [
        {
-         "http": "http://192.168.10.11:9090/metrics",
-         "interval": "10s"
+         "http": "http://172.30.1.52:9090/metrics",
+         "interval": "60s"
        }
      ],
      "meta": {
