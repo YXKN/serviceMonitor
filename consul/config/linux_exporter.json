@@ -1,0 +1,19 @@
+{
+   "service": {
+     "id": "linux_exporter",
+     "name": "local_exporter",
+     "address": "192.168.10.10",
+     "port": 9100,
+     "tags": [],
+     "checks": [
+       {
+         "http": "http://192.168.10.10:9100/metrics",
+         "interval": "10s"
+       }
+     ],
+     "meta": {
+       "checkport": "9100",
+       "location": "hunan"
+     }
+   }
+}
