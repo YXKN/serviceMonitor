@@ -2,12 +2,12 @@
    "service": {
      "id": "linux_exporter",
      "name": "local_exporter",
-     "address": "172.30.1.51",
+     "address": "node-exporter",
      "port": 9100,
      "tags": [],
      "checks": [
        {
-         "http": "http://172.30.1.51:9100/metrics",
+         "http": "http://node-exporter:9100/metrics",
          "interval": "60s"
        }
      ],

@@ -2,12 +2,12 @@
    "service": {
      "id": "prometheus",
      "name": "prometheus",
-     "address": "172.30.1.52",
+     "address": "myprom",
      "port": 9090,
      "tags": [],
      "checks": [
        {
-         "http": "http://172.30.1.52:9090/metrics",
+         "http": "http://myprom:9090/metrics",
          "interval": "60s"
        }
      ],
